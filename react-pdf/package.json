@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "rm -rf dist/ && NODE_ENV=production ./node_modules/.bin/webpack-cli --mode=production --optimize-minimize",
+    "build": "rimraf dist && cross-env NODE_ENV=production ./node_modules/.bin/webpack-cli --mode=production --optimize-minimize",
     "dev": "./node_modules/.bin/webpack-dev-server --mode=development"
   },
   "dependencies": {
@@ -33,6 +33,7 @@
     "babel-eslint": "10.0.3",
     "babel-loader": "8.0.6",
     "copy-webpack-plugin": "5.1.1",
+    "cross-env": "^7.0.2",
     "css-loader": "3.4.1",
     "file-loader": "5.0.2",
     "less": "3.10.3",

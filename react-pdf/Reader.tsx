@@ -137,7 +137,7 @@ class Reader extends React.Component<Props, State> {
       onRenderError={this.onError}
       onGetTextError={this.onError}
       onGetAnnotationsError={this.onError}
-      width={(document.body.clientWidth * 90) / 100}
+      width={(document.body.clientWidth * pageHorizontalScale || 90) / 100}
       onRenderSuccess={() => {
         this.__zoomEvent = false
       }}
@@ -148,7 +148,10 @@ class Reader extends React.Component<Props, State> {
   renderPages = () => {
     const pagesRange = Array.from(Array(this.state.numPages).keys())
     return pagesRange.map((n) => (
-      <div key={`page-${n.toString()}`} style={{ marginBottom: 10 }}>
+      <div
+        key={`page-${n.toString()}`}
+        style={{ marginBottom: pagePaddingBottom || 10 }}
+      >
         {this.renderPage(n + 1)}
       </div>
     ))
@@ -254,5 +257,9 @@ const file = tagData.getAttribute('data-file')
 const customStyle = window.CUSTOM_STYLE
 // @ts-ignore
 const withScroll = window.WITH_SCROLL
+// @ts-ignore
+const pagePaddingBottom = window.PAGE_PADDING_BOTTOM
+// @ts-ignore
+const pageHorizontalScale = window.PAGE_HORIZONTAL_SCALE
 
 render(<Reader {...{ file, customStyle, withScroll }} />, ReactContainer)
