@@ -150,7 +150,10 @@ class Reader extends React.Component<Props, State> {
     return pagesRange.map((n) => (
       <div
         key={`page-${n.toString()}`}
-        style={{ marginBottom: pagePaddingBottom || 10 }}
+        style={{
+          marginBottom:
+            typeof pagePaddingBottom === 'number' ? pagePaddingBottom : 10,
+        }}
       >
         {this.renderPage(n + 1)}
       </div>
