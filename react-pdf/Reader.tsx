@@ -147,17 +147,23 @@ class Reader extends React.Component<Props, State> {
 
   renderPages = () => {
     const pagesRange = Array.from(Array(this.state.numPages).keys())
-    return pagesRange.map((n) => (
-      <div
-        key={`page-${n.toString()}`}
-        style={{
-          marginBottom:
-            typeof pagePaddingBottom === 'number' ? pagePaddingBottom : 10,
-        }}
-      >
-        {this.renderPage(n + 1)}
-      </div>
-    ))
+    return pagesRange.map((n) => {
+      let marginBottom =
+        typeof pagePaddingBottom === 'number' ? pagePaddingBottom : 10
+      if (n === this.state.numPages) {
+        marginBottom = 0
+      }
+      return (
+        <div
+          key={`page-${n.toString()}`}
+          style={{
+            marginBottom,
+          }}
+        >
+          {this.renderPage(n + 1)}
+        </div>
+      )
+    })
   }
 
   render() {
