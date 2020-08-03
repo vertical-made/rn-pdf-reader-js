@@ -150,7 +150,8 @@ class Reader extends React.Component<Props, State> {
     return pagesRange.map((n) => {
       let marginBottom =
         typeof pagePaddingBottom === 'number' ? pagePaddingBottom : 10
-      if (n === this.state.numPages) {
+      // don't pad the last page
+      if (n === this.state.numPages - 1) {
         marginBottom = 0
       }
       return (
