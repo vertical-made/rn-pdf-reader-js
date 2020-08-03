@@ -51,6 +51,8 @@ export interface Props {
   customStyle?: CustomStyle
   useGoogleReader?: boolean
   withScroll?: boolean
+  pagePaddingBottom?: number
+  pageHorizontalScale?: number
   withPinchZoom?: boolean
   maximumPinchZoomScale?: number
   onLoad?(event: WebViewNavigationEvent): void
@@ -70,6 +72,8 @@ function viewerHtml(
   base64: string,
   customStyle?: CustomStyle,
   withScroll: boolean = false,
+  pagePaddingBottom?: number,
+  pageHorizontalScale?: number,
   withPinchZoom: boolean = false,
   maximumPinchZoomScale: number = 5,
 ): string {
@@ -104,10 +108,15 @@ function viewerHtml(
       } catch (error) {
         window.CUSTOM_STYLE = {}
       }
-      try {
-        window.WITH_SCROLL = JSON.parse('${JSON.stringify(withScroll)}');
-      } catch (error) {
-        window.WITH_SCROLL = {}
+      window.WITH_SCROLL = ${withScroll ? 'true' : 'undefined'}
+
+      window.PAGE_PADDING_BOTTOM = ${
+        typeof pagePaddingBottom === 'number' ? pagePaddingBottom : 'undefined'
+      }
+      window.PAGE_HORIZONTAL_SCALE = ${
+        typeof pageHorizontalScale === 'number'
+          ? pageHorizontalScale
+          : 'undefined'
       }
     </script>
   </head>
@@ -129,6 +138,8 @@ async function writeWebViewReaderFileAsync(
   data: string,
   customStyle?: CustomStyle,
   withScroll?: boolean,
+  pagePaddingBottom?: number,
+  pageHorizontalScale?: number,
   withPinchZoom?: boolean,
   maximumPinchZoomScale?: number,
 ): Promise<void> {
@@ -143,6 +154,8 @@ async function writeWebViewReaderFileAsync(
       data,
       customStyle,
       withScroll,
+      pagePaddingBottom,
+      pageHorizontalScale,
       withPinchZoom,
       maximumPinchZoomScale,
     ),
@@ -288,6 +301,8 @@ class PdfReader extends React.Component<Props, State> {
         source,
         customStyle,
         withScroll,
+        pagePaddingBottom,
+        pageHorizontalScale,
         withPinchZoom,
         maximumPinchZoomScale,
       } = this.props
@@ -299,6 +314,8 @@ class PdfReader extends React.Component<Props, State> {
             data!,
             customStyle,
             withScroll,
+            pagePaddingBottom,
+            pageHorizontalScale,
             withPinchZoom,
             maximumPinchZoomScale,
           )
@@ -310,6 +327,8 @@ class PdfReader extends React.Component<Props, State> {
             source.base64!,
             customStyle,
             withScroll,
+            pagePaddingBottom,
+            pageHorizontalScale,
             withPinchZoom,
             maximumPinchZoomScale,
           )

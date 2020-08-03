@@ -1,23 +1,26 @@
 {
-  "name": "rn-pdf-reader-js",
-  "version": "4.1.1",
+  "name": "@vertical-made/rn-pdf-reader-js",
+  "version": "4.1.5",
   "description": "PDF reader for Expo",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "author": "Xavier Carpentier <xcapetir@gmail.com> (https://xaviercarpentier.com/)",
   "license": "MIT",
   "scripts": {
     "start": "yarn config:dev && expo start -c",
     "tsc": "node_modules/.bin/tsc --noEmit",
-    "bundle": "./scripts/gen_bundle_string.js",
-    "build": "yarn bundle && rm -rf lib/ && node_modules/.bin/tsc",
+    "bundle": "node ./scripts/gen_bundle_string.js",
+    "build": "yarn bundle && rimraf lib/ && node_modules/.bin/tsc",
     "config:dev": "json -I -f package.json -e 'this.main=\"node_modules/expo/AppEntry.js\"'",
     "config:npm": "json -I -f package.json -e 'this.main=\"lib/index.js\"'",
     "lint": "tslint --project .",
     "verify": "yarn lint && yarn tsc && yarn build",
     "prepublishOnly": "yarn verify && yarn config:npm",
     "postpublish": "yarn config:dev",
-    "cleaning": "rm -rf node_modules && rm -f yarn.lock && yarn cache clean && yarn install && watchman watch-del-all && rm -fr $TMPDIR/react-*"
+    "cleaning": "rimraf node_modules && rimraf yarn.lock && yarn cache clean && yarn install && watchman watch-del-all && rimraf $TMPDIR/react-*"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "keywords": [
     "React-Native",
@@ -31,7 +34,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xcarpentier/rn-pdf-reader-js.git"
+    "url": "git+https://github.com/vertical-made/rn-pdf-reader-js.git"
   },
   "peerDependencies": {
     "expo": ">= 33.0.x < 37.0.x",
@@ -60,6 +63,7 @@
     "react": "16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.1.tar.gz",
     "react-native-webview": "7.4.3",
+    "rimraf": "^3.0.2",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "3.7.4"
